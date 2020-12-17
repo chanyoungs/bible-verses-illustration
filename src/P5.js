@@ -34,8 +34,9 @@ let displayPrev = true
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      width: 300
-      // height: 400,
+      width: 300,
+      height: 500,
+      background: "#808080"
     },
     p5: {
       // // background: "#f4d4ef",
@@ -48,8 +49,7 @@ const useStyles = makeStyles((theme) =>
       // justifyContent: "center"
     },
     verse: {
-      flex: 1,
-      background: "#CDCDCD"
+      flex: 1
     },
     black: {
       color: "#000000"
@@ -182,7 +182,7 @@ export const P5 = (props) => {
   const draw = (p5) => {
     p5.resizeCanvas(dimensions.width, dimensions.height)
     p5.colorMode(p5.HSB)
-    p5.background(0, 0, 80)
+    p5.background(0, 0, 50)
     if (displayPrev)
       displayCharacters({
         p5,
@@ -237,7 +237,9 @@ export const P5 = (props) => {
         {verse.split("").map((letter, index) => (
           <Typography
             display="inline"
+            variant="h6"
             className={classes[index <= charIndex ? "white" : "black"]}
+            key={index}
           >
             {letter}
           </Typography>

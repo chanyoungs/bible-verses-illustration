@@ -7,6 +7,7 @@ import PauseIcon from "@material-ui/icons/Pause"
 import { IconButton, Grid, Typography, TextField } from "@material-ui/core"
 import { MainContext } from "./MainContext"
 import NKRV from "../assets/bibles/nkrv"
+import { BackdropLoading } from "./BackdropLoading.js"
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -64,12 +65,16 @@ export const App = () => {
       }}
     >
       <div className={classes.root}>
+        <BackdropLoading
+          open={loadingInstruments > 0}
+          progress={100 * (1 - loadingInstruments / 3)}
+        />
         <P5 />
-        <TextField
+        {/* <TextField
           multiline
           value={verse}
           onChange={(e) => setVerse(e.target.value)}
-        />
+        /> */}
         <Grid container justify="center">
           <Grid item>
             <IconButton
