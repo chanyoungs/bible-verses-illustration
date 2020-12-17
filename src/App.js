@@ -87,7 +87,6 @@ export const App = () => {
             </IconButton>
           </Grid>
         </Grid>
-        <Typography>{verse}</Typography>
       </div>
     </MainContext.Provider>
   )

@@ -18,6 +18,7 @@ import { MainContext } from "./MainContext"
 import { getCharacterComponents, testKorean } from "./utils"
 import { displayCharacters } from "./utils/display"
 import { playSound } from "./utils/sound"
+import { Grid, Typography } from "@material-ui/core"
 
 let testerCount = 10
 const tester = (...log) => {
@@ -33,14 +34,28 @@ let displayPrev = true
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      // background: "#f4d4ef",
-      // minHeight: "100vh"
-      width: 300,
-      height: 400,
-      // width: "100vh",
-      // flex: 1,
-      display: "flex",
-      justifyContent: "center"
+      width: 300
+      // height: 400,
+    },
+    p5: {
+      // // background: "#f4d4ef",
+      // // minHeight: "100vh"
+      // width: 300,
+      height: 400
+      // // width: "100vh",
+      // // flex: 1,
+      // display: "flex",
+      // justifyContent: "center"
+    },
+    verse: {
+      flex: 1,
+      background: "#CDCDCD"
+    },
+    black: {
+      color: "#000000"
+    },
+    white: {
+      color: "#FFFFFF"
     }
   })
 )
@@ -208,23 +223,26 @@ export const P5 = (props) => {
       }
     }
 
-    p5.textSize(20)
-    // p5.textAlign(p5.CENTER)
-    p5.fill(0)
-    p5.text(verse, 0, 300, p5.width)
-    if (playing) {
-      p5.fill(0, 0, 100)
-      p5.text(verse.slice(0, charIndex + 1), 0, p5.height * 0.5 + 100, p5.width)
-    }
-
     // NOTE: Do not use setState in the draw function or in functions that are executed
     // in the draw function...
     // please use normal variables or class properties for these purposes
   }
 
   return (
-    <div className={classes.root} ref={targetRef}>
-      <Sketch preload={preload} setup={setup} draw={draw} />
-    </div>
+    <Grid container className={classes.root}>
+      <Grid item xs={12} className={classes.p5} ref={targetRef}>
+        <Sketch preload={preload} setup={setup} draw={draw} />
+      </Grid>
+      <Grid item xs={12} className={classes.verse}>
+        {verse.split("").map((letter, index) => (
+          <Typography
+            display="inline"
+            className={classes[index <= charIndex ? "white" : "black"]}
+          >
+            {letter}
+          </Typography>
+        ))}
+      </Grid>
+    </Grid>
   )
 }

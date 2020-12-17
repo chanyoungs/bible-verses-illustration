@@ -8,9 +8,9 @@ export const displayCharacters = ({
   fadeOut,
   noAlpha = false,
   gridWidth = p5.width * 0.9,
-  gridHeight = p5.height * 0.5,
+  gridHeight = p5.height * 0.9,
   x = (p5.width - gridWidth) / 2,
-  y = 50
+  y = (p5.height - gridHeight) / 2
 }) => {
   if (!charCodes) return null
 
