@@ -36,8 +36,9 @@ const useStyles = makeStyles((theme) =>
       // background: "#f4d4ef",
       // minHeight: "100vh"
       width: 300,
+      height: 400,
       // width: "100vh",
-      flex: 1,
+      // flex: 1,
       display: "flex",
       justifyContent: "center"
     }
@@ -76,78 +77,81 @@ export const P5 = (props) => {
     setVerseIndex
   } = useContext(MainContext)
 
-  const [instruments, setInstruments] = useState(() => ({
-    // violin: new Sampler({
-    //   urls: {
-    //     A4: violinA4
-    //   },
-    //   attack: 0,
-    //   release: 100,
-    //   onload: () => {
-    //     setLoadingInstruments((r) => r - 1)
-    //     console.log("Violin Loaded!")
-    //   }
-    // }).toDestination(),
-    organ: new Sampler({
-      urls: {
-        A1: organA1,
-        A2: organA2,
-        A3: organA3,
-        A4: organA4,
-        A5: organA5
-      },
-      attack: 100,
-      release: 100,
-      // volume: -10,
-      onload: () => {
-        setLoadingInstruments((r) => r - 1)
-        console.log("Organ Loaded!")
-      }
-    }).toDestination(),
-    flute: new Sampler({
-      urls: {
-        A3: fluteA3,
-        A4: fluteA4,
-        A5: fluteA5
-      },
-      attack: 100,
-      release: 100,
-      volume: -10,
-      onload: () => {
-        setLoadingInstruments((r) => r - 1)
-        console.log("Flute Loaded!")
-      }
-    }).toDestination(),
-    cello: new Sampler({
-      urls: {
-        A2: celloA2,
-        A3: celloA3,
-        A4: celloA4
-      },
-      attack: 100,
-      release: 100,
-      volume: -10,
-      onload: () => {
-        setLoadingInstruments((r) => r - 1)
-        console.log("Cello Loaded!")
-      }
-    }).toDestination()
-    // piano: new Sampler({
-    //   urls: {
-    //     C4: "C4.mp3",
-    //     "D#4": "Ds4.mp3",
-    //     "F#4": "Fs4.mp3",
-    //     A4: "A4.mp3"
-    //   },
-    //   attack: 0,
-    //   release: 100,
-    //   onload: () => {
-    //     setLoadingInstruments((r) => r - 1)
-    //     console.log("Piano Loaded!")
-    //   },
-    //   baseUrl: "https://tonejs.github.io/audio/salamander/"
-    // }).toDestination()
-  }))
+  const [instruments, setInstruments] = useState(() => {
+    console.log(1)
+    return {
+      // violin: new Sampler({
+      //   urls: {
+      //     A4: violinA4
+      //   },
+      //   attack: 0,
+      //   release: 100,
+      //   onload: () => {
+      //     setLoadingInstruments((r) => r - 1)
+      //     console.log("Violin Loaded!")
+      //   }
+      // }).toDestination(),
+      organ: new Sampler({
+        urls: {
+          A1: organA1,
+          A2: organA2,
+          A3: organA3,
+          A4: organA4,
+          A5: organA5
+        },
+        attack: 100,
+        release: 100,
+        // volume: -10,
+        onload: () => {
+          setLoadingInstruments((r) => r - 1)
+          console.log("Organ Loaded!")
+        }
+      }).toDestination(),
+      flute: new Sampler({
+        urls: {
+          A3: fluteA3,
+          A4: fluteA4,
+          A5: fluteA5
+        },
+        attack: 100,
+        release: 100,
+        volume: -10,
+        onload: () => {
+          setLoadingInstruments((r) => r - 1)
+          console.log("Flute Loaded!")
+        }
+      }).toDestination(),
+      cello: new Sampler({
+        urls: {
+          A2: celloA2,
+          A3: celloA3,
+          A4: celloA4
+        },
+        attack: 100,
+        release: 100,
+        volume: -10,
+        onload: () => {
+          setLoadingInstruments((r) => r - 1)
+          console.log("Cello Loaded!")
+        }
+      }).toDestination()
+      // piano: new Sampler({
+      //   urls: {
+      //     C4: "C4.mp3",
+      //     "D#4": "Ds4.mp3",
+      //     "F#4": "Fs4.mp3",
+      //     A4: "A4.mp3"
+      //   },
+      //   attack: 0,
+      //   release: 100,
+      //   onload: () => {
+      //     setLoadingInstruments((r) => r - 1)
+      //     console.log("Piano Loaded!")
+      //   },
+      //   baseUrl: "https://tonejs.github.io/audio/salamander/"
+      // }).toDestination()
+    }
+  })
 
   const preload = (p5) => {}
 
@@ -210,7 +214,7 @@ export const P5 = (props) => {
     p5.text(verse, 0, 300, p5.width)
     if (playing) {
       p5.fill(0, 0, 100)
-      p5.text(verse.slice(0, charIndex + 1), 0, 300, p5.width)
+      p5.text(verse.slice(0, charIndex + 1), 0, p5.height * 0.5 + 100, p5.width)
     }
 
     // NOTE: Do not use setState in the draw function or in functions that are executed
