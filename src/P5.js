@@ -34,28 +34,7 @@ let displayPrev = true
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      width: 300,
-      height: 500,
-      background: "#808080"
-    },
-    p5: {
-      // // background: "#f4d4ef",
-      // // minHeight: "100vh"
-      // width: 300,
       height: 400
-      // // width: "100vh",
-      // // flex: 1,
-      // display: "flex",
-      // justifyContent: "center"
-    },
-    verse: {
-      flex: 1
-    },
-    black: {
-      color: "#000000"
-    },
-    white: {
-      color: "#FFFFFF"
     }
   })
 )
@@ -229,22 +208,8 @@ export const P5 = (props) => {
   }
 
   return (
-    <Grid container className={classes.root}>
-      <Grid item xs={12} className={classes.p5} ref={targetRef}>
-        <Sketch preload={preload} setup={setup} draw={draw} />
-      </Grid>
-      <Grid item xs={12} className={classes.verse}>
-        {verse.split("").map((letter, index) => (
-          <Typography
-            display="inline"
-            variant="h6"
-            className={classes[index <= charIndex ? "white" : "black"]}
-            key={index}
-          >
-            {letter}
-          </Typography>
-        ))}
-      </Grid>
-    </Grid>
+    <div ref={targetRef} className={classes.root}>
+      <Sketch preload={preload} setup={setup} draw={draw} />
+    </div>
   )
 }

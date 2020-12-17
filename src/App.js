@@ -17,6 +17,24 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       justifyContent: "center",
       minHeight: "100vh"
+    },
+    display: {
+      width: 300,
+      height: 500,
+      background: "#808080"
+    },
+    verse: {
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2)
+    },
+    typography: {
+      fontWeight: "bold"
+    },
+    black: {
+      color: "#000000"
+    },
+    white: {
+      color: "#FFFFFF"
     }
   })
 )
@@ -29,6 +47,7 @@ export const App = () => {
   const [verse, setVerse] = useState(NKRV["0001"].verses[0])
   const [charIndex, setCharIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
+  const [stopped, setStopped] = useState(true)
   const [loadingInstruments, setLoadingInstruments] = useState(3)
   const interval = 60
   const [timeNow, setTimeNow] = useState(interval)
@@ -41,6 +60,7 @@ export const App = () => {
     setTimeNow(interval)
   }
   const stop = () => {
+    setStopped(true)
     setPlaying(false)
     reset()
   }
@@ -61,6 +81,7 @@ export const App = () => {
         timeNow,
         setTimeNow,
         stop,
+        stopped,
         reset
       }}
     >
@@ -69,16 +90,35 @@ export const App = () => {
           open={loadingInstruments > 0}
           progress={100 * (1 - loadingInstruments / 3)}
         />
-        <P5 />
-        {/* <TextField
+        <Grid container className={classes.display}>
+          <Grid item xs={12}>
+            <P5 />
+            {/* <TextField
           multiline
           value={verse}
           onChange={(e) => setVerse(e.target.value)}
         /> */}
+          </Grid>
+          <Grid item xs={12} className={classes.verse}>
+            {verse.split("").map((letter, index) => (
+              <Typography
+                display="inline"
+                variant="h6"
+                className={`${classes.typography} ${
+                  classes[index <= charIndex && !stopped ? "white" : "black"]
+                }`}
+                key={index}
+              >
+                {letter}
+              </Typography>
+            ))}
+          </Grid>
+        </Grid>
         <Grid container justify="center">
           <Grid item>
             <IconButton
               onClick={() => {
+                if (!playing) setStopped(false)
                 setPlaying(!playing)
               }}
               disabled={loadingInstruments > 0}
