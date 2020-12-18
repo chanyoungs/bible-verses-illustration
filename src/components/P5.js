@@ -34,7 +34,10 @@ let displayPrev = true
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
-      height: 400
+      // height: 400
+      paddingTop: theme.spacing(2),
+      flex: 1,
+      width: "100vw"
     }
   })
 )
@@ -160,7 +163,15 @@ export const P5 = (props) => {
   const draw = (p5) => {
     p5.resizeCanvas(dimensions.width, dimensions.height)
     p5.colorMode(p5.HSB)
-    p5.background(0, 0, 50)
+    // p5.background(0, 0, 50)
+    const gridSize = Math.min(p5.width, p5.height)
+    p5.fill(0, 0, 50)
+    p5.rect(
+      (p5.width - gridSize) / 2,
+      (p5.height - gridSize) / 2,
+      gridSize,
+      gridSize
+    )
     if (displayPrev)
       displayCharacters({
         p5,

@@ -48,8 +48,8 @@ const useStyles = makeStyles((theme) =>
     black: {
       color: "#000000"
     },
-    white: {
-      color: "#FFFFFF"
+    primary: {
+      color: theme.palette.primary.main
     },
     bottomNavigation: {
       // position: "fixed",
@@ -161,16 +161,14 @@ export const App = () => {
           open={loadingInstruments > 0}
           progress={100 * (1 - loadingInstruments / 3)}
         />
-        <div className={classes.display}>
-          <P5 />
-        </div>
+        <P5 />
         <div className={classes.verse}>
           {verse.split("").map((letter, index) => (
             <Typography
               display="inline"
               variant="h6"
               className={`${classes.typography} ${
-                classes[index <= charIndex && !stopped ? "white" : "black"]
+                classes[index <= charIndex && !stopped ? "black" : "primary"]
               }`}
               key={index}
             >

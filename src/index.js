@@ -8,14 +8,11 @@ import { MuiThemeProvider } from "@material-ui/core"
 import { App } from "./components/App"
 import { removeWatermark } from "./utils"
 
-const theme = createMuiTheme()
-theme.palette.background.default = "#808080"
-
 setTimeout(removeWatermark, 1000)
 
 const rootElement = document.getElementById("root")
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
+  <MuiThemeProvider theme={createMuiTheme()}>
     <CssBaseline />
     <App />
   </MuiThemeProvider>,

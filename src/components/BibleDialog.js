@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) =>
     containerHorizontal: {
       display: "flex"
     },
-    dialog: {},
+    bold: { fontWeight: "bold" },
     itemHorizontal: {
       flex: 1,
       // TODO: Find the proper way to style
@@ -196,7 +196,9 @@ export const BibleDialog = (props) => {
   return (
     <Fragment>
       <Button size="small" onClick={handleClickOpen} color="inherit">
-        {buttonContent(bibleRefKey)}
+        <Typography className={classes.bold}>
+          {buttonContent(bibleRefKey)}
+        </Typography>
       </Button>
 
       <Dialog
