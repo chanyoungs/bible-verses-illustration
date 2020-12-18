@@ -4,6 +4,7 @@ import { P5 } from "./P5.js"
 import PlayArrowIcon from "@material-ui/icons/PlayArrow"
 import StopIcon from "@material-ui/icons/Stop"
 import PauseIcon from "@material-ui/icons/Pause"
+import HelpIcon from "@material-ui/icons/Help"
 import {
   IconButton,
   Grid,
@@ -20,6 +21,7 @@ import NKRV from "../../assets/bibles/nkrv"
 import { BackdropLoading } from "./BackdropLoading.js"
 import { BibleDialog } from "./BibleDialog.js"
 import { bibleIndex } from "../utils/references.js"
+import { DialogExplanation } from "./DialogExplanation.js"
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -74,11 +76,12 @@ export const App = () => {
   const [loadingInstruments, setLoadingInstruments] = useState(3)
   const interval = 30
   const [timeNow, setTimeNow] = useState(interval)
-  const [openBibleDialog, setOpenBibleDialog] = useState({
+  const [openDialogBible, setOpenDialogBible] = useState({
     book: false,
     chapter: false,
     verse: false
   })
+  const [openDialogExplanation, setOpenDialogExplanation] = useState(false)
 
   const reset = () => {
     setCharIndex(0)
@@ -160,6 +163,10 @@ export const App = () => {
           open={loadingInstruments > 0}
           progress={100 * (1 - loadingInstruments / 3)}
         />
+        <DialogExplanation
+          open={openDialogExplanation}
+          handleClose={() => setOpenDialogExplanation(false)}
+        />
         <P5 />
         <div className={classes.verse}>
           {verse.split("").map((letter, index) => (
@@ -179,7 +186,20 @@ export const App = () => {
           <Toolbar>
             <Grid container justify="center" alignItems="center">
               <Grid item>
-                <ButtonGroup fullWidth className={classes.buttonGroup}>
+                <IconButton
+                  color="inherit"
+                  onClick={() => setOpenDialogExplanation(true)}
+                  disabled={loadingInstruments > 0}
+                >
+                  <HelpIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <ButtonGroup
+                  fullWidth
+                  className={classes.buttonGroup}
+                  disabled={loadingInstruments > 0}
+                >
                   {["book", "chapter", "verse"].map(
                     (bibleRefKey) =>
                       (bibleRefKey !== "chapter" || bibleRef.book !== null) && (
@@ -189,8 +209,8 @@ export const App = () => {
                           bibleRef={bibleRef}
                           chapterLength={NKRV[getChapterKey()].verses.length}
                           setBibleRef={setBibleRef}
-                          open={openBibleDialog}
-                          setOpen={setOpenBibleDialog}
+                          open={openDialogBible}
+                          setOpen={setOpenDialogBible}
                           stop={stop}
                         />
                       )

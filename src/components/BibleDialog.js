@@ -7,11 +7,17 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import Divider from "@material-ui/core/Divider"
 import Grid from "@material-ui/core/Grid"
 import IconButton from "@material-ui/core/IconButton"
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+  useTheme
+} from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import { bibleIndex } from "../utils/references"
 import React, { FC, Fragment } from "react"
+import { useMediaQuery } from "@material-ui/core"
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -46,6 +52,8 @@ export const BibleDialog = (props) => {
     stop
   } = props
   const classes = useStyles()
+  const theme = useTheme()
+  const largeScreen = useMediaQuery(theme.breakpoints.up("sm"))
 
   const handleClickOpen = () => {
     setOpen({ ...open, [bibleRefKey]: true })
@@ -97,12 +105,16 @@ export const BibleDialog = (props) => {
     switch (bibleRefKey) {
       case "book":
         return bibleRef.book !== null
-          ? bibleIndex["korean"][bibleRef.book]
+          ? bibleIndex[largeScreen ? "korean" : "kor"][bibleRef.book]
           : "책"
       case "chapter":
-        return bibleRef.chapter !== null ? `${bibleRef.chapter + 1}장` : "장"
+        return bibleRef.chapter !== null
+          ? `${bibleRef.chapter + 1}${largeScreen ? "장" : ""}`
+          : "장"
       case "verse":
-        return bibleRef.verse !== null ? `${bibleRef.verse + 1}절` : "절"
+        return bibleRef.verse !== null
+          ? `${bibleRef.verse + 1}${largeScreen ? "절" : ""}`
+          : "절"
       default:
         return null
     }
