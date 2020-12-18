@@ -5,7 +5,7 @@ import { CssBaseline } from "@material-ui/core"
 import { MuiThemeProvider } from "@material-ui/core"
 // import "./index.css";
 
-import { App } from "./App"
+import { App } from "./components/App"
 
 const rootElement = document.getElementById("root")
 ReactDOM.render(

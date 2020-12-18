@@ -2,22 +2,22 @@ import React, { useState, useContext, useRef, useLayoutEffect } from "react"
 import Sketch from "react-p5"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
 import { Sampler } from "tone"
-import violinA4 from "../assets/samples/violin/A4.wav"
-import organA1 from "../assets/samples/organ/A1.wav"
-import organA2 from "../assets/samples/organ/A2.wav"
-import organA3 from "../assets/samples/organ/A3.wav"
-import organA4 from "../assets/samples/organ/A4.wav"
-import organA5 from "../assets/samples/organ/A5.wav"
-import fluteA3 from "../assets/samples/flute/A3.wav"
-import fluteA4 from "../assets/samples/flute/A4.wav"
-import fluteA5 from "../assets/samples/flute/A5.wav"
-import celloA2 from "../assets/samples/cello/A2.wav"
-import celloA3 from "../assets/samples/cello/A3.wav"
-import celloA4 from "../assets/samples/cello/A4.wav"
-import { MainContext } from "./MainContext"
-import { getCharacterComponents, testKorean } from "./utils"
-import { displayCharacters } from "./utils/display"
-import { playSound } from "./utils/sound"
+import violinA4 from "../../assets/samples/violin/A4.wav"
+import organA1 from "../../assets/samples/organ/A1.wav"
+import organA2 from "../../assets/samples/organ/A2.wav"
+import organA3 from "../../assets/samples/organ/A3.wav"
+import organA4 from "../../assets/samples/organ/A4.wav"
+import organA5 from "../../assets/samples/organ/A5.wav"
+import fluteA3 from "../../assets/samples/flute/A3.wav"
+import fluteA4 from "../../assets/samples/flute/A4.wav"
+import fluteA5 from "../../assets/samples/flute/A5.wav"
+import celloA2 from "../../assets/samples/cello/A2.wav"
+import celloA3 from "../../assets/samples/cello/A3.wav"
+import celloA4 from "../../assets/samples/cello/A4.wav"
+import { MainContext } from "./../MainContext"
+import { getCharacterComponents, testKorean } from "../utils"
+import { displayCharacters } from "../utils/display"
+import { playSound } from "../utils/sound"
 import { Grid, Typography } from "@material-ui/core"
 
 let testerCount = 10
@@ -68,11 +68,10 @@ export const P5 = (props) => {
     setTimeNow,
     stop,
     reset,
-    setVerseIndex
+    getNextVerse
   } = useContext(MainContext)
 
   const [instruments, setInstruments] = useState(() => {
-    console.log(1)
     return {
       // violin: new Sampler({
       //   urls: {
@@ -198,7 +197,7 @@ export const P5 = (props) => {
       } else {
         // stop()
         reset()
-        setVerseIndex((verseIndex) => verseIndex + 1)
+        getNextVerse()
       }
     }
 
