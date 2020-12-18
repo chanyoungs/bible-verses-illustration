@@ -29,14 +29,16 @@ const useStyles = makeStyles((theme) =>
       alignItems: "center",
       // justifyContent: "center",
       minHeight: "100vh"
-      // minWidth: "100vh"
+      // minWidth: "100vh",
     },
     display: {
-      width: 300,
-      height: 500,
-      background: "#808080"
+      // width: 300,
+      // height: 500
+      width: "100vw",
+      flex: 1
     },
     verse: {
+      flex: 1,
       paddingLeft: theme.spacing(2),
       paddingRight: theme.spacing(2)
     },
@@ -53,7 +55,7 @@ const useStyles = makeStyles((theme) =>
       // position: "fixed",
       top: "auto",
       bottom: 0,
-      width: "100%"
+      width: "100vw"
       // background: theme.palette.primary.main
     }
   })
@@ -71,7 +73,7 @@ export const App = () => {
   const [playing, setPlaying] = useState(false)
   const [stopped, setStopped] = useState(true)
   const [loadingInstruments, setLoadingInstruments] = useState(3)
-  const interval = 10
+  const interval = 30
   const [timeNow, setTimeNow] = useState(interval)
   const [openBibleDialog, setOpenBibleDialog] = useState({
     book: false,
@@ -159,46 +161,24 @@ export const App = () => {
           open={loadingInstruments > 0}
           progress={100 * (1 - loadingInstruments / 3)}
         />
-        <Grid container className={classes.display}>
-          <Grid item xs={12}>
-            <P5 />
-            {/* <TextField
-          multiline
-          value={verse}
-          onChange={(e) => setVerse(e.target.value)}
-        /> */}
-          </Grid>
-          <Grid item xs={12} className={classes.verse}>
-            {verse.split("").map((letter, index) => (
-              <Typography
-                display="inline"
-                variant="h6"
-                className={`${classes.typography} ${
-                  classes[index <= charIndex && !stopped ? "white" : "black"]
-                }`}
-                key={index}
-              >
-                {letter}
-              </Typography>
-            ))}
-          </Grid>
-        </Grid>
-        {/* <BottomNavigation className={classes.bottomNavigation}>
-          <BottomNavigationAction
-            icon={playing ? <PauseIcon /> : <PlayArrowIcon />}
-            onClick={() => {
-              if (!playing) setStopped(false)
-              setPlaying(!playing)
-            }}
-            disabled={loadingInstruments > 0}
-          />
-          <BottomNavigationAction
-            icon={<StopIcon />}
-            onClick={stop}
-            disabled={loadingInstruments > 0}
-          />
-        </BottomNavigation> */}
-        <AppBar className={classes.bottomNavigation}>
+        <div className={classes.display}>
+          <P5 />
+        </div>
+        <div className={classes.verse}>
+          {verse.split("").map((letter, index) => (
+            <Typography
+              display="inline"
+              variant="h6"
+              className={`${classes.typography} ${
+                classes[index <= charIndex && !stopped ? "white" : "black"]
+              }`}
+              key={index}
+            >
+              {letter}
+            </Typography>
+          ))}
+        </div>
+        <AppBar position="sticky" className={classes.bottomNavigation}>
           <Toolbar>
             <Grid container justify="center" alignItems="center">
               <Grid item>

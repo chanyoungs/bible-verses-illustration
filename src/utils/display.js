@@ -1,4 +1,4 @@
-import { charToHSV, initials, middles, ends } from "../references"
+import { charToHSV, initials, middles, ends } from "./references"
 
 export const displayCharacters = ({
   p5,
@@ -7,8 +7,8 @@ export const displayCharacters = ({
   timeNow,
   fadeOut,
   noAlpha = false,
-  gridWidth = p5.width * 0.9,
-  gridHeight = p5.height * 0.9,
+  gridWidth = Math.min(p5.width, p5.height) * 0.9,
+  gridHeight = Math.min(p5.width, p5.height) * 0.9,
   x = (p5.width - gridWidth) / 2,
   y = (p5.height - gridHeight) / 2
 }) => {
