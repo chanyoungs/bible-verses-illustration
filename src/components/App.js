@@ -45,11 +45,10 @@ const useStyles = makeStyles((theme) =>
     typography: {
       fontWeight: "bold"
     },
-    black: {
-      color: "#000000"
-    },
-    primary: {
-      color: theme.palette.primary.main
+    highlighted: {
+      // color: theme.palette.primary.main
+      color: "#ffffff",
+      background: "#000000"
     },
     bottomNavigation: {
       // position: "fixed",
@@ -168,7 +167,7 @@ export const App = () => {
               display="inline"
               variant="h6"
               className={`${classes.typography} ${
-                classes[index <= charIndex && !stopped ? "black" : "primary"]
+                classes[index <= charIndex && !stopped && "highlighted"]
               }`}
               key={index}
             >
