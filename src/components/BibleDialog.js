@@ -108,13 +108,9 @@ export const BibleDialog = (props) => {
           ? bibleIndex[largeScreen ? "korean" : "kor"][bibleRef.book]
           : "책"
       case "chapter":
-        return bibleRef.chapter !== null
-          ? `${bibleRef.chapter + 1}${largeScreen ? "장" : ""}`
-          : "장"
+        return bibleRef.chapter !== null ? `${bibleRef.chapter + 1}장` : "장"
       case "verse":
-        return bibleRef.verse !== null
-          ? `${bibleRef.verse + 1}${largeScreen ? "절" : ""}`
-          : "절"
+        return bibleRef.verse !== null ? `${bibleRef.verse + 1}절` : "절"
       default:
         return null
     }

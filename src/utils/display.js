@@ -10,7 +10,8 @@ export const displayCharacters = ({
   gridWidth = Math.min(p5.width, p5.height) * 0.9,
   gridHeight = Math.min(p5.width, p5.height) * 0.9,
   x = (p5.width - gridWidth) / 2,
-  y = (p5.height - gridHeight) / 2
+  y = (p5.height - gridHeight) / 2,
+  displayMode = 1
 }) => {
   if (!charCodes) return null
 
@@ -66,7 +67,11 @@ export const displayCharacters = ({
           ? 1
           : (timeIndex * timeInterval - timeNow) / timeInterval
         p5.fill(...charToHSV[char], alpha)
-        p5.rect(xRect, yRect, lengthX, lengthY)
+        if (displayMode === 1) {
+          p5.rectMode(p5.CORNERS)
+          p5.rect(xRect, yRect, x + gridWidth, y + gridHeight)
+          p5.rectMode(p5.CORNER)
+        } else p5.rect(xRect, yRect, lengthX, lengthY)
         timeIndex--
       })
     }

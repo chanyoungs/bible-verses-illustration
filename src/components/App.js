@@ -14,7 +14,8 @@ import {
   Toolbar,
   BottomNavigation,
   BottomNavigationAction,
-  ButtonGroup
+  ButtonGroup,
+  Button
 } from "@material-ui/core"
 import { MainContext } from "../MainContext"
 import NKRV from "../../assets/bibles/nkrv"
@@ -74,7 +75,7 @@ export const App = () => {
   const [playing, setPlaying] = useState(false)
   const [stopped, setStopped] = useState(true)
   const [loadingInstruments, setLoadingInstruments] = useState(3)
-  const interval = 30
+  const interval = 60
   const [timeNow, setTimeNow] = useState(interval)
   const [openDialogBible, setOpenDialogBible] = useState({
     book: false,
@@ -82,6 +83,8 @@ export const App = () => {
     verse: false
   })
   const [openDialogExplanation, setOpenDialogExplanation] = useState(false)
+  const [displayMode, setDisplayMode] = useState(0)
+  const [frequencyMode, setFrequencyMode] = useState(0)
 
   const reset = () => {
     setCharIndex(0)
@@ -107,13 +110,6 @@ export const App = () => {
       setVerse(NKRV[getChapterKey()].verses[bibleRef.verse])
     }
   }, [bibleRef.book, bibleRef.chapter, bibleRef.verse])
-
-  // const getVerse = () => {
-  //   const cumulativeChapter = `${String(
-  //     bibleIndex.cumulativeChapters[bibleRef.book] + bibleRef.chapter
-  //   ).padStart(4, "0")}`
-  //   return NKRV[cumulativeChapter].verses[bibleRef.verse - 1]
-  // }
 
   const getNextVerse = () => {
     if (
@@ -155,18 +151,44 @@ export const App = () => {
         setTimeNow,
         stop,
         stopped,
-        reset
+        reset,
+        frequencyMode,
+        displayMode
       }}
     >
+      <BackdropLoading
+        open={loadingInstruments > 0}
+        progress={100 * (1 - loadingInstruments / 3)}
+      />
+      <DialogExplanation
+        open={openDialogExplanation}
+        handleClose={() => setOpenDialogExplanation(false)}
+      />
       <div className={classes.root}>
-        <BackdropLoading
-          open={loadingInstruments > 0}
-          progress={100 * (1 - loadingInstruments / 3)}
-        />
-        <DialogExplanation
-          open={openDialogExplanation}
-          handleClose={() => setOpenDialogExplanation(false)}
-        />
+        <AppBar position="sticky">
+          <Toolbar>
+            <Grid container justify="center" alignItems="center">
+              <Grid item>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() => setFrequencyMode(1 - frequencyMode)}
+                >
+                  {`Frequency Mode ${frequencyMode + 1}`}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() => setDisplayMode(1 - displayMode)}
+                >
+                  {`Display Mode ${displayMode + 1}`}
+                </Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
         <P5 />
         <div className={classes.verse}>
           {verse.split("").map((letter, index) => (
@@ -185,15 +207,6 @@ export const App = () => {
         <AppBar position="sticky" className={classes.bottomNavigation}>
           <Toolbar>
             <Grid container justify="center" alignItems="center">
-              <Grid item>
-                <IconButton
-                  color="inherit"
-                  onClick={() => setOpenDialogExplanation(true)}
-                  disabled={loadingInstruments > 0}
-                >
-                  <HelpIcon />
-                </IconButton>
-              </Grid>
               <Grid item>
                 <ButtonGroup
                   fullWidth
@@ -236,6 +249,15 @@ export const App = () => {
                   disabled={loadingInstruments > 0}
                 >
                   <StopIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  color="inherit"
+                  onClick={() => setOpenDialogExplanation(true)}
+                  disabled={loadingInstruments > 0}
+                >
+                  <HelpIcon />
                 </IconButton>
               </Grid>
             </Grid>

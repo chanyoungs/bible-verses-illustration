@@ -71,7 +71,9 @@ export const P5 = (props) => {
     setTimeNow,
     stop,
     reset,
-    getNextVerse
+    getNextVerse,
+    frequencyMode,
+    displayMode
   } = useContext(MainContext)
 
   const [instruments, setInstruments] = useState(() => {
@@ -179,9 +181,17 @@ export const P5 = (props) => {
         interval,
         timeNow,
         noAlpha: true,
-        fadeOut
+        fadeOut,
+        displayMode
       })
-    displayCharacters({ p5, charCodes, interval, timeNow, fadeOut })
+    displayCharacters({
+      p5,
+      charCodes,
+      interval,
+      timeNow,
+      fadeOut,
+      displayMode
+    })
 
     if (loadingInstruments === 0 && playing) {
       if (charIndex < verse.length) {
@@ -198,7 +208,7 @@ export const P5 = (props) => {
             const char = verse[charIndex]
             if (testKorean(char)) {
               charCodes = getCharacterComponents(char)
-              playSound(charCodes, instruments)
+              playSound(charCodes, instruments, frequencyMode)
             } else {
               fadeOut = true
             }
