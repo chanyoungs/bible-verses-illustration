@@ -16,8 +16,8 @@ import celloA3 from "../../assets/samples/cello/A3.wav"
 import celloA4 from "../../assets/samples/cello/A4.wav"
 import { MainContext } from "./../MainContext"
 import { getCharacterComponents, testKorean } from "../utils"
-import { displayCharacters } from "../utils/display"
-import { playSound } from "../utils/sound"
+import { charactersDisplayerLoader } from "../utils/display"
+import { soundPlayerLoader } from "../utils/sound"
 import { Grid, Typography } from "@material-ui/core"
 
 let testerCount = 10
@@ -30,6 +30,11 @@ const tester = (...log) => {
 
 let fadeOut = false
 let displayPrev = true
+let instrumentsPlayStatus = {
+  0: true,
+  1: true,
+  2: true
+}
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -70,10 +75,12 @@ export const P5 = (props) => {
     timeNow,
     setTimeNow,
     stop,
+    stopped,
     reset,
     getNextVerse,
     frequencyMode,
-    displayMode
+    displayMode,
+    instrumentsPlayMode
   } = useContext(MainContext)
 
   const [instruments, setInstruments] = useState(() => {
@@ -151,6 +158,24 @@ export const P5 = (props) => {
     }
   })
 
+  const soundPlayer = (charCode, componentIndex) =>
+    soundPlayerLoader(charCode, componentIndex, instruments, frequencyMode)
+
+  const charactersDisplayer = (p5, charCodes, noAlpha) =>
+    charactersDisplayerLoader({
+      p5,
+      charCodes,
+      interval,
+      timeNow,
+      noAlpha,
+      fadeOut,
+      stopped,
+      displayMode,
+      soundPlayer,
+      instrumentsPlayMode,
+      instrumentsPlayStatus
+    })
+
   const preload = (p5) => {}
 
   const setup = (p5, canvasParentRef) => {
@@ -174,24 +199,8 @@ export const P5 = (props) => {
       gridSize,
       gridSize
     )
-    if (displayPrev)
-      displayCharacters({
-        p5,
-        charCodes: charCodesPrev,
-        interval,
-        timeNow,
-        noAlpha: true,
-        fadeOut,
-        displayMode
-      })
-    displayCharacters({
-      p5,
-      charCodes,
-      interval,
-      timeNow,
-      fadeOut,
-      displayMode
-    })
+    if (displayPrev) charactersDisplayer(p5, charCodesPrev, true)
+    charactersDisplayer(p5, charCodes)
 
     if (loadingInstruments === 0 && playing) {
       if (charIndex < verse.length) {
@@ -208,9 +217,18 @@ export const P5 = (props) => {
             const char = verse[charIndex]
             if (testKorean(char)) {
               charCodes = getCharacterComponents(char)
-              playSound(charCodes, instruments, frequencyMode)
+              if (instrumentsPlayMode === 0) {
+                charCodes.forEach((charCode, componentIndex) => {
+                  soundPlayer(charCode, componentIndex)
+                })
+              }
             } else {
               fadeOut = true
+            }
+            instrumentsPlayStatus = {
+              0: true,
+              1: true,
+              2: true
             }
           }
           setTimeNow(timeNow - 1)

@@ -1,43 +1,46 @@
-export const playSound = (charCodes, instruments, frequencyMode = 1) => {
-  charCodes.forEach((component, i) => {
-    if (i === 2) {
-      if (component === 0) return null
-      else component--
-    }
-    // No end component
+export const soundPlayerLoader = (
+  charCode,
+  componentIndex,
+  instruments,
+  frequencyMode
+) => {
+  if (componentIndex === 2) {
+    if (charCode === 0) return null
+    else charCode--
+  }
+  // No end component
 
-    let base
-    switch (i) {
-      case 0:
-        base = -12
-        break
-      case 1:
-        base = -12
-        break
-      case 2:
-        base = -24
-        break
-      default:
-        break
-    }
+  let base
+  switch (componentIndex) {
+    case 0:
+      base = -12
+      break
+    case 1:
+      base = -12
+      break
+    case 2:
+      base = -24
+      break
+    default:
+      break
+  }
 
-    let frequency
-    switch (frequencyMode) {
-      case 0:
-        frequency = getFrequency(base, component)
-        break
-      case 1:
-        frequency = getFrequency(base, degreeToNote(component))
-        break
-      default:
-        break
-    }
+  let frequency
+  switch (frequencyMode) {
+    case 0:
+      frequency = getFrequency(base, charCode)
+      break
+    case 1:
+      frequency = getFrequency(base, degreeToNote(charCode))
+      break
+    default:
+      break
+  }
 
-    instruments[["flute", "cello", "organ"][i]].triggerAttackRelease(
-      frequency,
-      1
-    )
-  })
+  instruments[["flute", "cello", "organ"][componentIndex]].triggerAttackRelease(
+    frequency,
+    1
+  )
 }
 
 const rootFrequency = 220

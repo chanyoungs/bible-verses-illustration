@@ -85,6 +85,7 @@ export const App = () => {
   const [openDialogExplanation, setOpenDialogExplanation] = useState(false)
   const [displayMode, setDisplayMode] = useState(0)
   const [frequencyMode, setFrequencyMode] = useState(0)
+  const [instrumentsPlayMode, setInstrumentsPlayMode] = useState(0)
 
   const reset = () => {
     setCharIndex(0)
@@ -153,7 +154,8 @@ export const App = () => {
         stopped,
         reset,
         frequencyMode,
-        displayMode
+        displayMode,
+        instrumentsPlayMode
       }}
     >
       <BackdropLoading
@@ -175,6 +177,17 @@ export const App = () => {
                   onClick={() => setFrequencyMode(1 - frequencyMode)}
                 >
                   {`Frequency Mode ${frequencyMode + 1}`}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() =>
+                    setInstrumentsPlayMode(1 - instrumentsPlayMode)
+                  }
+                >
+                  {`Instruments Play Mode ${instrumentsPlayMode + 1}`}
                 </Button>
               </Grid>
               <Grid item>

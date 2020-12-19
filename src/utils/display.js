@@ -1,19 +1,29 @@
 import { charToHSV, initials, middles, ends } from "./references"
-
-export const displayCharacters = ({
+let testerCount = 10
+const tester = (...log) => {
+  if (testerCount > 0) {
+    console.log(...log)
+    testerCount--
+  }
+}
+export const charactersDisplayerLoader = ({
   p5,
   charCodes,
   interval,
   timeNow,
   fadeOut,
+  stopped,
   noAlpha = false,
   gridWidth = Math.min(p5.width, p5.height) * 0.9,
   gridHeight = Math.min(p5.width, p5.height) * 0.9,
   x = (p5.width - gridWidth) / 2,
   y = (p5.height - gridHeight) / 2,
-  displayMode = 1
+  displayMode,
+  soundPlayer,
+  instrumentsPlayMode,
+  instrumentsPlayStatus
 }) => {
-  if (!charCodes) return null
+  if (!charCodes || stopped) return null
 
   const initialAtomic = initials[charCodes[0]].atomic
   const middleAtomic = middles[charCodes[1]].atomic
@@ -28,26 +38,42 @@ export const displayCharacters = ({
 
   const Atomics = [initialAtomic, ...middleAtomic, endAtomic]
   let totalGrids = 0
-  Atomics.forEach((atom) => (totalGrids += atom.length))
+  const cumulativeTimeIndices = []
+
+  Atomics.forEach((atom, i) => {
+    if (i !== 2) cumulativeTimeIndices.push(totalGrids)
+    totalGrids += atom.length
+  })
 
   const timeInterval = interval / totalGrids
   let timeIndex = totalGrids
 
-  Atomics.forEach((atomic, i) => {
+  Atomics.forEach((atomic, componentIndex) => {
+    if (
+      instrumentsPlayMode === 1 &&
+      !noAlpha &&
+      !fadeOut &&
+      instrumentsPlayStatus[componentIndex] &&
+      cumulativeTimeIndices[componentIndex] * timeInterval <= interval - timeNow
+    ) {
+      soundPlayer(charCodes[componentIndex], componentIndex)
+      instrumentsPlayStatus[componentIndex] = false
+    }
+
     if (atomic.length > 0) {
-      const direction = i === 1 ? "vertical" : "horizontal"
-      const xStart = x + (i === 2 ? gridWidth / 2 : 0)
-      const xEnd = x + gridWidth / (i < 2 ? horizontalGrids : 1)
+      const direction = componentIndex === 1 ? "vertical" : "horizontal"
+      const xStart = x + (componentIndex === 2 ? gridWidth / 2 : 0)
+      const xEnd = x + gridWidth / (componentIndex < 2 ? horizontalGrids : 1)
 
       let yStart
-      if (i === 0 || i === 2) yStart = y
-      else if (i === 1) yStart = y + gridHeight / verticalGrids
-      else if (i === 3)
+      if (componentIndex === 0 || componentIndex === 2) yStart = y
+      else if (componentIndex === 1) yStart = y + gridHeight / verticalGrids
+      else if (componentIndex === 3)
         yStart =
           y + (gridHeight * (1 + (middleAtomic[0].length > 0))) / verticalGrids
 
       let yEnd
-      if (i === 2)
+      if (componentIndex === 2)
         yEnd = y + (1 - (endAtomic.length > 0) / verticalGrids) * gridHeight
       else yEnd = yStart + gridHeight / verticalGrids
 
@@ -58,9 +84,9 @@ export const displayCharacters = ({
       let lengthY =
         (yEnd - yStart) / (direction === "vertical" ? atomic.length : 1)
 
-      atomic.forEach((char, i) => {
-        if (direction === "horizontal") xRect = xStart + i * lengthX
-        else yRect = yStart + i * lengthY
+      atomic.forEach((char, charIndex) => {
+        if (direction === "horizontal") xRect = xStart + charIndex * lengthX
+        else yRect = yStart + charIndex * lengthY
         const alpha = fadeOut
           ? timeNow / timeInterval
           : noAlpha
