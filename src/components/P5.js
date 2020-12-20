@@ -261,7 +261,7 @@ export const P5 = (props) => {
             },
             attack: 100,
             release: 100,
-            // volume: -10,
+            volume: 10,
             onload: () => {
               setLoadingInstruments((r) => r - 3)
               console.log("Xylophone Loaded!")

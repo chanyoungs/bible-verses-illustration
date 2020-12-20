@@ -9,11 +9,8 @@ import {
   IconButton,
   Grid,
   Typography,
-  TextField,
   AppBar,
   Toolbar,
-  BottomNavigation,
-  BottomNavigationAction,
   ButtonGroup,
   Button
 } from "@material-ui/core"

@@ -1,11 +1,5 @@
 import { charToHSV, components } from "./references"
-let testerCount = 10
-const tester = (...log) => {
-  if (testerCount > 0) {
-    console.log(...log)
-    testerCount--
-  }
-}
+
 export const charactersDisplayerLoader = ({
   p5,
   charCodes,

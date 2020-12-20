@@ -1,5 +1,3 @@
-import { components } from "./references"
-
 export const soundPlayerLoader = (
   charCode,
   componentIndex,
@@ -11,20 +9,7 @@ export const soundPlayerLoader = (
     else charCode--
   }
 
-  let base
-  switch (componentIndex) {
-    case 0:
-      base = -12
-      break
-    case 1:
-      base = -12
-      break
-    case 2:
-      base = -24
-      break
-    default:
-      break
-  }
+  const base = -6 - 12 * componentIndex
 
   let frequency
   switch (frequencyMode) {
@@ -48,7 +33,6 @@ const getFrequency = (base, note) =>
 
 const degreeToNote = (scaleDegree) => {
   const scaleIntervals = [0, 2, 4, 5, 7, 9, 11]
-  // scaleDegree--
   return (
     Math.floor(scaleDegree / 7) * 12 +
     scaleIntervals[(scaleDegree + 7 * 10) % 7]
