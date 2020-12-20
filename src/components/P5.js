@@ -1,8 +1,17 @@
-import React, { useState, useContext, useRef, useLayoutEffect } from "react"
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useLayoutEffect,
+  useEffect
+} from "react"
 import Sketch from "react-p5"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
 import { Sampler } from "tone"
 import violinA4 from "../../assets/samples/violin/A4.wav"
+import basoonA1 from "../../assets/samples/basoon/A1.wav"
+import basoonA2 from "../../assets/samples/basoon/A2.wav"
+import basoonA3 from "../../assets/samples/basoon/A3.wav"
 import organA1 from "../../assets/samples/organ/A1.wav"
 import organA2 from "../../assets/samples/organ/A2.wav"
 import organA3 from "../../assets/samples/organ/A3.wav"
@@ -14,6 +23,17 @@ import fluteA5 from "../../assets/samples/flute/A5.wav"
 import celloA2 from "../../assets/samples/cello/A2.wav"
 import celloA3 from "../../assets/samples/cello/A3.wav"
 import celloA4 from "../../assets/samples/cello/A4.wav"
+import harpA2 from "../../assets/samples/harp/A2.wav"
+import harpB3 from "../../assets/samples/harp/B3.wav"
+import harpA4 from "../../assets/samples/harp/A4.wav"
+import harpB5 from "../../assets/samples/harp/B5.wav"
+import harpA6 from "../../assets/samples/harp/A6.wav"
+import doubleBassA1 from "../../assets/samples/doubleBass/A1.wav"
+import doubleBassA2 from "../../assets/samples/doubleBass/A2.wav"
+import doubleBassA3 from "../../assets/samples/doubleBass/A3.wav"
+import guitarA1 from "../../assets/samples/guitar/A1.wav"
+import guitarA2 from "../../assets/samples/guitar/A2.wav"
+import guitarA3 from "../../assets/samples/guitar/A3.wav"
 import { MainContext } from "./../MainContext"
 import { getCharacterComponents, testKorean } from "../utils"
 import { charactersDisplayerLoader } from "../utils/display"
@@ -35,6 +55,7 @@ let instrumentsPlayStatus = {
   1: true,
   2: true
 }
+let instruments
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -49,6 +70,7 @@ const useStyles = makeStyles((theme) =>
 
 let charCodes
 let charCodesPrev
+let rest = false
 
 export const P5 = (props) => {
   const classes = useStyles()
@@ -80,83 +102,158 @@ export const P5 = (props) => {
     getNextVerse,
     frequencyMode,
     displayMode,
-    instrumentsPlayMode
+    instrumentsPlayMode,
+    instrumentsMode
   } = useContext(MainContext)
 
-  const [instruments, setInstruments] = useState(() => {
-    return {
-      // violin: new Sampler({
-      //   urls: {
-      //     A4: violinA4
-      //   },
-      //   attack: 0,
-      //   release: 100,
-      //   onload: () => {
-      //     setLoadingInstruments((r) => r - 1)
-      //     console.log("Violin Loaded!")
-      //   }
-      // }).toDestination(),
-      organ: new Sampler({
-        urls: {
-          A1: organA1,
-          A2: organA2,
-          A3: organA3,
-          A4: organA4,
-          A5: organA5
-        },
-        attack: 100,
-        release: 100,
-        // volume: -10,
-        onload: () => {
-          setLoadingInstruments((r) => r - 1)
-          console.log("Organ Loaded!")
-        }
-      }).toDestination(),
-      flute: new Sampler({
-        urls: {
-          A3: fluteA3,
-          A4: fluteA4,
-          A5: fluteA5
-        },
-        attack: 100,
-        release: 100,
-        volume: -10,
-        onload: () => {
-          setLoadingInstruments((r) => r - 1)
-          console.log("Flute Loaded!")
-        }
-      }).toDestination(),
-      cello: new Sampler({
-        urls: {
-          A2: celloA2,
-          A3: celloA3,
-          A4: celloA4
-        },
-        attack: 100,
-        release: 100,
-        volume: -10,
-        onload: () => {
-          setLoadingInstruments((r) => r - 1)
-          console.log("Cello Loaded!")
-        }
-      }).toDestination()
-      // piano: new Sampler({
-      //   urls: {
-      //     C4: "C4.mp3",
-      //     "D#4": "Ds4.mp3",
-      //     "F#4": "Fs4.mp3",
-      //     A4: "A4.mp3"
-      //   },
-      //   attack: 0,
-      //   release: 100,
-      //   onload: () => {
-      //     setLoadingInstruments((r) => r - 1)
-      //     console.log("Piano Loaded!")
-      //   },
-      //   baseUrl: "https://tonejs.github.io/audio/salamander/"
-      // }).toDestination()
+  const [instrumentSets, setInstrumentSets] = useState({ 0: null, 1: null })
+
+  useEffect(() => {
+    if (instrumentSets[instrumentsMode] === null) {
+      setLoadingInstruments(loadingInstruments + 3)
+      const newInstrumentSet =
+        instrumentsMode === 0
+          ? [
+              new Sampler({
+                urls: {
+                  A3: fluteA3,
+                  A4: fluteA4,
+                  A5: fluteA5
+                },
+                attack: 100,
+                release: 100,
+                volume: -10,
+                onload: () => {
+                  setLoadingInstruments((r) => r - 1)
+                  console.log("Flute Loaded!")
+                }
+              }).toDestination(),
+              new Sampler({
+                urls: {
+                  A2: celloA2,
+                  A3: celloA3,
+                  A4: celloA4
+                },
+                attack: 100,
+                release: 100,
+                // volume: -10,
+                onload: () => {
+                  setLoadingInstruments((r) => r - 1)
+                  console.log("Cello Loaded!")
+                }
+              }).toDestination(),
+              new Sampler({
+                urls: {
+                  A1: basoonA1,
+                  A2: basoonA2,
+                  A3: basoonA3
+                },
+                attack: 100,
+                release: 100,
+                // volume: -10,
+                onload: () => {
+                  setLoadingInstruments((r) => r - 1)
+                  console.log("Basoon Loaded!")
+                }
+              }).toDestination()
+              // new Sampler({
+              //   urls: {
+              //     A1: organA1,
+              //     A2: organA2,
+              //     A3: organA3,
+              //     A4: organA4,
+              //     A5: organA5
+              //   },
+              //   attack: 100,
+              //   release: 100,
+              //   // volume: -10,
+              //   onload: () => {
+              //     setLoadingInstruments((r) => r - 1)
+              //     console.log("Organ Loaded!")
+              //   }
+              // }).toDestination()
+            ]
+          : [
+              new Sampler({
+                urls: {
+                  A2: harpA2,
+                  B3: harpB3,
+                  A4: harpA4,
+                  B5: harpB5,
+                  A6: harpA6
+                },
+                attack: 100,
+                release: 100,
+                // volume: -10,
+                onload: () => {
+                  setLoadingInstruments((r) => r - 1)
+                  console.log("Harp Loaded!")
+                }
+              }).toDestination(),
+              // new Sampler({
+              //   urls: {
+              //     C4: "C4.mp3",
+              //     "D#4": "Ds4.mp3",
+              //     "F#4": "Fs4.mp3",
+              //     A4: "A4.mp3"
+              //   },
+              //   attack: 0,
+              //   release: 100,
+              //   onload: () => {
+              //     setLoadingInstruments((r) => r - 1)
+              //     console.log("Piano Loaded!")
+              //   },
+              //   baseUrl: "https://tonejs.github.io/audio/salamander/"
+              // }).toDestination(),
+              new Sampler({
+                urls: {
+                  A1: guitarA1,
+                  A2: guitarA2,
+                  A3: guitarA3
+                },
+                attack: 100,
+                release: 100,
+                // volume: -10,
+                onload: () => {
+                  setLoadingInstruments((r) => r - 1)
+                  console.log("Guitar Loaded!")
+                }
+              }).toDestination(),
+              new Sampler({
+                urls: {
+                  A1: doubleBassA1,
+                  A2: doubleBassA2,
+                  A3: doubleBassA3
+                },
+                attack: 100,
+                release: 100,
+                // volume: -10,
+                onload: () => {
+                  setLoadingInstruments((r) => r - 1)
+                  console.log("Double Bass Loaded!")
+                }
+              }).toDestination()
+            ]
+      setInstrumentSets({
+        ...instrumentSets,
+        [instrumentsMode]: newInstrumentSet
+      })
     }
-  })
+  }, [instrumentsMode])
+
+  instruments = instrumentSets[instrumentsMode]
+
+  // violin: new Sampler({
+  //   urls: {
+  //     A4: violinA4
+  //   },
+  //   attack: 0,
+  //   release: 100,
+  //   onload: () => {
+  //     setLoadingInstruments((r) => r - 1)
+  //     console.log("Violin Loaded!")
+  //   }
+  // }).toDestination(),
 
   const soundPlayer = (charCode, componentIndex) =>
     soundPlayerLoader(charCode, componentIndex, instruments, frequencyMode)
@@ -173,7 +270,8 @@ export const P5 = (props) => {
       displayMode,
       soundPlayer,
       instrumentsPlayMode,
-      instrumentsPlayStatus
+      instrumentsPlayStatus,
+      rest
     })
 
   const preload = (p5) => {}
@@ -191,14 +289,19 @@ export const P5 = (props) => {
     p5.resizeCanvas(dimensions.width, dimensions.height)
     p5.colorMode(p5.HSB)
     // p5.background(0, 0, 50)
-    const gridSize = Math.min(p5.width, p5.height)
-    p5.fill(0, 0, 50)
+    const gridSize = Math.min(p5.width, p5.height) * 0.91
+    // p5.fill(0, 0, 50)
+    p5.noFill()
+    p5.stroke(0, 0, 50)
+    p5.strokeWeight(5)
     p5.rect(
       (p5.width - gridSize) / 2,
       (p5.height - gridSize) / 2,
       gridSize,
       gridSize
     )
+    p5.noStroke()
+
     if (displayPrev) charactersDisplayer(p5, charCodesPrev, true)
     charactersDisplayer(p5, charCodes)
 
@@ -214,16 +317,18 @@ export const P5 = (props) => {
           fadeOut = false
         } else {
           if (timeNow === interval) {
+            rest = false
             const char = verse[charIndex]
             if (testKorean(char)) {
               charCodes = getCharacterComponents(char)
-              if (instrumentsPlayMode === 0) {
+              if (instrumentsPlayMode === 1) {
                 charCodes.forEach((charCode, componentIndex) => {
                   soundPlayer(charCode, componentIndex)
                 })
               }
             } else {
               fadeOut = true
+              rest = true
             }
             instrumentsPlayStatus = {
               0: true,

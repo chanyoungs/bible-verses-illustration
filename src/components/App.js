@@ -74,7 +74,7 @@ export const App = () => {
   const [charIndex, setCharIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const [stopped, setStopped] = useState(true)
-  const [loadingInstruments, setLoadingInstruments] = useState(3)
+  const [loadingInstruments, setLoadingInstruments] = useState(0)
   const interval = 60
   const [timeNow, setTimeNow] = useState(interval)
   const [openDialogBible, setOpenDialogBible] = useState({
@@ -86,6 +86,7 @@ export const App = () => {
   const [displayMode, setDisplayMode] = useState(0)
   const [frequencyMode, setFrequencyMode] = useState(0)
   const [instrumentsPlayMode, setInstrumentsPlayMode] = useState(0)
+  const [instrumentsMode, setInstrumentsMode] = useState(0)
 
   const reset = () => {
     setCharIndex(0)
@@ -155,7 +156,8 @@ export const App = () => {
         reset,
         frequencyMode,
         displayMode,
-        instrumentsPlayMode
+        instrumentsPlayMode,
+        instrumentsMode
       }}
     >
       <BackdropLoading
@@ -188,6 +190,15 @@ export const App = () => {
                   }
                 >
                   {`Instruments Play Mode ${instrumentsPlayMode + 1}`}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  color="inherit"
+                  variant="outlined"
+                  onClick={() => setInstrumentsMode(1 - instrumentsMode)}
+                >
+                  {`Instruments Mode ${instrumentsMode + 1}`}
                 </Button>
               </Grid>
               <Grid item>

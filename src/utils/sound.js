@@ -1,3 +1,5 @@
+import { components } from "./references"
+
 export const soundPlayerLoader = (
   charCode,
   componentIndex,
@@ -8,7 +10,11 @@ export const soundPlayerLoader = (
     if (charCode === 0) return null
     else charCode--
   }
-  // No end component
+  console.log(
+    charCode,
+    componentIndex,
+    components[componentIndex][charCode + (componentIndex === 2)].combined
+  )
 
   let base
   switch (componentIndex) {
@@ -28,19 +34,16 @@ export const soundPlayerLoader = (
   let frequency
   switch (frequencyMode) {
     case 0:
-      frequency = getFrequency(base, charCode)
+      frequency = getFrequency(base, degreeToNote(charCode))
       break
     case 1:
-      frequency = getFrequency(base, degreeToNote(charCode))
+      frequency = getFrequency(base, charCode)
       break
     default:
       break
   }
 
-  instruments[["flute", "cello", "organ"][componentIndex]].triggerAttackRelease(
-    frequency,
-    1
-  )
+  instruments[componentIndex].triggerAttackRelease(frequency, 1)
 }
 
 const rootFrequency = 220

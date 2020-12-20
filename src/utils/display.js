@@ -1,4 +1,4 @@
-import { charToHSV, initials, middles, ends } from "./references"
+import { charToHSV, components } from "./references"
 let testerCount = 10
 const tester = (...log) => {
   if (testerCount > 0) {
@@ -21,22 +21,27 @@ export const charactersDisplayerLoader = ({
   displayMode,
   soundPlayer,
   instrumentsPlayMode,
-  instrumentsPlayStatus
+  instrumentsPlayStatus,
+  rest
 }) => {
   if (!charCodes || stopped) return null
 
-  const initialAtomic = initials[charCodes[0]].atomic
-  const middleAtomic = middles[charCodes[1]].atomic
-  const endAtomic = ends[charCodes[2]].atomic
+  const componentAtomics = charCodes.map(
+    (charCode, componentIndex) => components[componentIndex][charCode].atomic
+  )
 
   const verticalGrids =
-    (initialAtomic.length > 0) +
-    (middleAtomic[0].length > 0) +
-    (endAtomic.length > 0)
+    (componentAtomics[0].length > 0) +
+    (componentAtomics[1][0].length > 0) +
+    (componentAtomics[2].length > 0)
   const horizontalGrids =
-    (initialAtomic.length > 0) + (middleAtomic[1].length > 0)
+    (componentAtomics[0].length > 0) + (componentAtomics[1][1].length > 0)
 
-  const Atomics = [initialAtomic, ...middleAtomic, endAtomic]
+  const Atomics = [
+    componentAtomics[0],
+    ...componentAtomics[1],
+    componentAtomics[2]
+  ]
   let totalGrids = 0
   const cumulativeTimeIndices = []
 
@@ -50,9 +55,9 @@ export const charactersDisplayerLoader = ({
 
   Atomics.forEach((atomic, componentIndex) => {
     if (
-      instrumentsPlayMode === 1 &&
+      instrumentsPlayMode === 0 &&
       !noAlpha &&
-      !fadeOut &&
+      !rest &&
       instrumentsPlayStatus[componentIndex] &&
       cumulativeTimeIndices[componentIndex] * timeInterval <= interval - timeNow
     ) {
@@ -70,11 +75,15 @@ export const charactersDisplayerLoader = ({
       else if (componentIndex === 1) yStart = y + gridHeight / verticalGrids
       else if (componentIndex === 3)
         yStart =
-          y + (gridHeight * (1 + (middleAtomic[0].length > 0))) / verticalGrids
+          y +
+          (gridHeight * (1 + (componentAtomics[1][0].length > 0))) /
+            verticalGrids
 
       let yEnd
       if (componentIndex === 2)
-        yEnd = y + (1 - (endAtomic.length > 0) / verticalGrids) * gridHeight
+        yEnd =
+          y +
+          (1 - (componentAtomics[2].length > 0) / verticalGrids) * gridHeight
       else yEnd = yStart + gridHeight / verticalGrids
 
       let xRect = xStart
@@ -93,7 +102,7 @@ export const charactersDisplayerLoader = ({
           ? 1
           : (timeIndex * timeInterval - timeNow) / timeInterval
         p5.fill(...charToHSV[char], alpha)
-        if (displayMode === 1) {
+        if (displayMode === 0) {
           p5.rectMode(p5.CORNERS)
           p5.rect(xRect, yRect, x + gridWidth, y + gridHeight)
           p5.rectMode(p5.CORNER)

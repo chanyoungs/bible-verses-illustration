@@ -19,105 +19,105 @@ export const charToHSV = {
   ㅡ: [28, 100, 0]
 }
 
-export const initials = [
-  { combined: "ㄱ", atomic: ["ㄱ"] },
-  { combined: "ㄲ", atomic: ["ㄱ", "ㄱ"] },
-  { combined: "ㄴ", atomic: ["ㄴ"] },
-  { combined: "ㄷ", atomic: ["ㄷ"] },
-  { combined: "ㄸ", atomic: ["ㄷ", "ㄷ"] },
-  { combined: "ㄹ", atomic: ["ㄹ"] },
-  { combined: "ㅁ", atomic: ["ㅁ"] },
-  { combined: "ㅂ", atomic: ["ㅂ"] },
-  { combined: "ㅃ", atomic: ["ㅂ", "ㅂ"] },
-  { combined: "ㅅ", atomic: ["ㅅ"] },
-  { combined: "ㅆ", atomic: ["ㅅ", "ㅅ"] },
-  { combined: "ㅇ", atomic: ["ㅇ"] },
-  { combined: "ㅈ", atomic: ["ㅈ"] },
-  { combined: "ㅉ", atomic: ["ㅈ", "ㅈ"] },
-  { combined: "ㅊ", atomic: ["ㅊ"] },
-  { combined: "ㅋ", atomic: ["ㅋ"] },
-  { combined: "ㅌ", atomic: ["ㅌ"] },
-  { combined: "ㅍ", atomic: ["ㅍ"] },
-  { combined: "ㅎ", atomic: ["ㅎ"] }
-]
-
-export const middles = [
-  { combined: "ㅏ", atomic: [[], ["ㅣ", "."]] },
-  { combined: "ㅐ", atomic: [[], ["ㅣ", ".", "ㅣ"]] },
-  { combined: "ㅑ", atomic: [[], ["ㅣ", ".."]] },
-  { combined: "ㅒ", atomic: [[], ["ㅣ", "..", "ㅣ"]] },
-  { combined: "ㅓ", atomic: [[], [".", "ㅣ"]] },
-  { combined: "ㅔ", atomic: [[], [".", "ㅣ", "ㅣ"]] },
-  { combined: "ㅕ", atomic: [[], ["..", "ㅣ"]] },
-  { combined: "ㅖ", atomic: [[], ["..", "ㅣ", "ㅣ"]] },
-  { combined: "ㅗ", atomic: [[".", "ㅡ"], []] },
-  {
-    combined: "ㅘ",
-    atomic: [
-      [".", "ㅡ"],
-      ["ㅣ", "."]
-    ]
-  },
-  {
-    combined: "ㅙ",
-    atomic: [
-      [".", "ㅡ"],
-      ["ㅣ", ".", "ㅣ"]
-    ]
-  },
-  { combined: "ㅚ", atomic: [[".", "ㅡ"], ["ㅣ"]] },
-  { combined: "ㅛ", atomic: [["..", "ㅡ"], []] },
-  { combined: "ㅜ", atomic: [["ㅡ", "."], []] },
-  {
-    combined: "ㅝ",
-    atomic: [
-      ["ㅡ", "."],
-      [".", "ㅣ"]
-    ]
-  },
-  {
-    combined: "ㅞ",
-    atomic: [
-      ["ㅡ", "."],
-      [".", "ㅣ", "ㅣ"]
-    ]
-  },
-  { combined: "ㅟ", atomic: [["ㅡ", "."], ["ㅣ"]] },
-  { combined: "ㅠ", atomic: [["ㅡ", ".."], []] },
-  { combined: "ㅡ", atomic: [["ㅡ"], []] },
-  { combined: "ㅢ", atomic: [["ㅡ"], ["ㅣ"]] },
-  { combined: "ㅣ", atomic: [[], ["ㅣ"]] }
-]
-
-export const ends = [
-  { combined: "", atomic: [] },
-  { combined: "ㄱ", atomic: ["ㄱ"] },
-  { combined: "ㄲ", atomic: ["ㄱ", "ㄱ"] },
-  { combined: "ㄳ", atomic: ["ㄱ", "ㅅ"] },
-  { combined: "ㄴ", atomic: ["ㄴ"] },
-  { combined: "ㄵ", atomic: ["ㄴ", "ㅈ"] },
-  { combined: "ㄶ", atomic: ["ㄴ", "ㅎ"] },
-  { combined: "ㄷ", atomic: ["ㄷ"] },
-  { combined: "ㄹ", atomic: ["ㄹ"] },
-  { combined: "ㄺ", atomic: ["ㄹ", "ㄱ"] },
-  { combined: "ㄻ", atomic: ["ㄹ", "ㅁ"] },
-  { combined: "ㄼ", atomic: ["ㄹ", "ㅂ"] },
-  { combined: "ㄽ", atomic: ["ㄹ", "ㅅ"] },
-  { combined: "ㄾ", atomic: ["ㄹ", "ㅌ"] },
-  { combined: "ㄿ", atomic: ["ㄹ", "ㅍ"] },
-  { combined: "ㅀ", atomic: ["ㄹ", "ㅎ"] },
-  { combined: "ㅁ", atomic: ["ㅁ"] },
-  { combined: "ㅂ", atomic: ["ㅂ"] },
-  { combined: "ㅄ", atomic: ["ㅂ", "ㅅ"] },
-  { combined: "ㅅ", atomic: ["ㅅ"] },
-  { combined: "ㅆ", atomic: ["ㅅ", "ㅅ"] },
-  { combined: "ㅇ", atomic: ["ㅇ"] },
-  { combined: "ㅈ", atomic: ["ㅈ"] },
-  { combined: "ㅊ", atomic: ["ㅊ"] },
-  { combined: "ㅋ", atomic: ["ㅋ"] },
-  { combined: "ㅌ", atomic: ["ㅌ"] },
-  { combined: "ㅍ", atomic: ["ㅍ"] },
-  { combined: "ㅎ", atomic: ["ㅎ"] }
+export const components = [
+  [
+    { combined: "ㄱ", atomic: ["ㄱ"] },
+    { combined: "ㄲ", atomic: ["ㄱ", "ㄱ"] },
+    { combined: "ㄴ", atomic: ["ㄴ"] },
+    { combined: "ㄷ", atomic: ["ㄷ"] },
+    { combined: "ㄸ", atomic: ["ㄷ", "ㄷ"] },
+    { combined: "ㄹ", atomic: ["ㄹ"] },
+    { combined: "ㅁ", atomic: ["ㅁ"] },
+    { combined: "ㅂ", atomic: ["ㅂ"] },
+    { combined: "ㅃ", atomic: ["ㅂ", "ㅂ"] },
+    { combined: "ㅅ", atomic: ["ㅅ"] },
+    { combined: "ㅆ", atomic: ["ㅅ", "ㅅ"] },
+    { combined: "ㅇ", atomic: ["ㅇ"] },
+    { combined: "ㅈ", atomic: ["ㅈ"] },
+    { combined: "ㅉ", atomic: ["ㅈ", "ㅈ"] },
+    { combined: "ㅊ", atomic: ["ㅊ"] },
+    { combined: "ㅋ", atomic: ["ㅋ"] },
+    { combined: "ㅌ", atomic: ["ㅌ"] },
+    { combined: "ㅍ", atomic: ["ㅍ"] },
+    { combined: "ㅎ", atomic: ["ㅎ"] }
+  ],
+  [
+    { combined: "ㅏ", atomic: [[], ["ㅣ", "."]] },
+    { combined: "ㅐ", atomic: [[], ["ㅣ", ".", "ㅣ"]] },
+    { combined: "ㅑ", atomic: [[], ["ㅣ", ".."]] },
+    { combined: "ㅒ", atomic: [[], ["ㅣ", "..", "ㅣ"]] },
+    { combined: "ㅓ", atomic: [[], [".", "ㅣ"]] },
+    { combined: "ㅔ", atomic: [[], [".", "ㅣ", "ㅣ"]] },
+    { combined: "ㅕ", atomic: [[], ["..", "ㅣ"]] },
+    { combined: "ㅖ", atomic: [[], ["..", "ㅣ", "ㅣ"]] },
+    { combined: "ㅗ", atomic: [[".", "ㅡ"], []] },
+    {
+      combined: "ㅘ",
+      atomic: [
+        [".", "ㅡ"],
+        ["ㅣ", "."]
+      ]
+    },
+    {
+      combined: "ㅙ",
+      atomic: [
+        [".", "ㅡ"],
+        ["ㅣ", ".", "ㅣ"]
+      ]
+    },
+    { combined: "ㅚ", atomic: [[".", "ㅡ"], ["ㅣ"]] },
+    { combined: "ㅛ", atomic: [["..", "ㅡ"], []] },
+    { combined: "ㅜ", atomic: [["ㅡ", "."], []] },
+    {
+      combined: "ㅝ",
+      atomic: [
+        ["ㅡ", "."],
+        [".", "ㅣ"]
+      ]
+    },
+    {
+      combined: "ㅞ",
+      atomic: [
+        ["ㅡ", "."],
+        [".", "ㅣ", "ㅣ"]
+      ]
+    },
+    { combined: "ㅟ", atomic: [["ㅡ", "."], ["ㅣ"]] },
+    { combined: "ㅠ", atomic: [["ㅡ", ".."], []] },
+    { combined: "ㅡ", atomic: [["ㅡ"], []] },
+    { combined: "ㅢ", atomic: [["ㅡ"], ["ㅣ"]] },
+    { combined: "ㅣ", atomic: [[], ["ㅣ"]] }
+  ],
+  [
+    { combined: "", atomic: [] },
+    { combined: "ㄱ", atomic: ["ㄱ"] },
+    { combined: "ㄲ", atomic: ["ㄱ", "ㄱ"] },
+    { combined: "ㄳ", atomic: ["ㄱ", "ㅅ"] },
+    { combined: "ㄴ", atomic: ["ㄴ"] },
+    { combined: "ㄵ", atomic: ["ㄴ", "ㅈ"] },
+    { combined: "ㄶ", atomic: ["ㄴ", "ㅎ"] },
+    { combined: "ㄷ", atomic: ["ㄷ"] },
+    { combined: "ㄹ", atomic: ["ㄹ"] },
+    { combined: "ㄺ", atomic: ["ㄹ", "ㄱ"] },
+    { combined: "ㄻ", atomic: ["ㄹ", "ㅁ"] },
+    { combined: "ㄼ", atomic: ["ㄹ", "ㅂ"] },
+    { combined: "ㄽ", atomic: ["ㄹ", "ㅅ"] },
+    { combined: "ㄾ", atomic: ["ㄹ", "ㅌ"] },
+    { combined: "ㄿ", atomic: ["ㄹ", "ㅍ"] },
+    { combined: "ㅀ", atomic: ["ㄹ", "ㅎ"] },
+    { combined: "ㅁ", atomic: ["ㅁ"] },
+    { combined: "ㅂ", atomic: ["ㅂ"] },
+    { combined: "ㅄ", atomic: ["ㅂ", "ㅅ"] },
+    { combined: "ㅅ", atomic: ["ㅅ"] },
+    { combined: "ㅆ", atomic: ["ㅅ", "ㅅ"] },
+    { combined: "ㅇ", atomic: ["ㅇ"] },
+    { combined: "ㅈ", atomic: ["ㅈ"] },
+    { combined: "ㅊ", atomic: ["ㅊ"] },
+    { combined: "ㅋ", atomic: ["ㅋ"] },
+    { combined: "ㅌ", atomic: ["ㅌ"] },
+    { combined: "ㅍ", atomic: ["ㅍ"] },
+    { combined: "ㅎ", atomic: ["ㅎ"] }
+  ]
 ]
 
 export const bibleIndex = {
