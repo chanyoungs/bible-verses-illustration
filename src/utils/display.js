@@ -96,17 +96,21 @@ export const charactersDisplayerLoader = ({
       atomic.forEach((char, charIndex) => {
         if (direction === "horizontal") xRect = xStart + charIndex * lengthX
         else yRect = yStart + charIndex * lengthY
-        const alpha = fadeOut
-          ? timeNow / timeInterval
-          : noAlpha
-          ? 1
-          : (timeIndex * timeInterval - timeNow) / timeInterval
+        let alpha =
+          displayMode === 2
+            ? 1 - timeNow / interval
+            : (timeIndex * timeInterval - timeNow) / timeInterval
+        if (noAlpha) alpha = 1
+        if (fadeOut) alpha = timeNow / interval
+
         p5.fill(...charToHSV[char], alpha)
-        if (displayMode === 0) {
+        if (displayMode === 1) {
+          p5.rect(xRect, yRect, lengthX, lengthY)
+        } else {
           p5.rectMode(p5.CORNERS)
           p5.rect(xRect, yRect, x + gridWidth, y + gridHeight)
           p5.rectMode(p5.CORNER)
-        } else p5.rect(xRect, yRect, lengthX, lengthY)
+        }
         timeIndex--
       })
     }

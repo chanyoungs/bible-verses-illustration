@@ -205,7 +205,7 @@ export const App = () => {
                 <Button
                   color="inherit"
                   variant="outlined"
-                  onClick={() => setDisplayMode(1 - displayMode)}
+                  onClick={() => setDisplayMode((displayMode + 1) % 3)}
                 >
                   {`Display Mode ${displayMode + 1}`}
                 </Button>
