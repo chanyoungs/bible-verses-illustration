@@ -10,11 +10,6 @@ export const soundPlayerLoader = (
     if (charCode === 0) return null
     else charCode--
   }
-  console.log(
-    charCode,
-    componentIndex,
-    components[componentIndex][charCode + (componentIndex === 2)].combined
-  )
 
   let base
   switch (componentIndex) {

@@ -104,7 +104,7 @@ export const charactersDisplayerLoader = ({
         if (fadeOut) alpha = timeNow / interval
 
         p5.fill(...charToHSV[char], alpha)
-        if (displayMode === 1) {
+        if (displayMode === 0) {
           p5.rect(xRect, yRect, lengthX, lengthY)
         } else {
           p5.rectMode(p5.CORNERS)

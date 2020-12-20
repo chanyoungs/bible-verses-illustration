@@ -196,7 +196,7 @@ export const App = () => {
                 <Button
                   color="inherit"
                   variant="outlined"
-                  onClick={() => setInstrumentsMode(1 - instrumentsMode)}
+                  onClick={() => setInstrumentsMode((instrumentsMode + 1) % 3)}
                 >
                   {`Instruments Mode ${instrumentsMode + 1}`}
                 </Button>

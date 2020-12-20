@@ -9,9 +9,9 @@ import Sketch from "react-p5"
 import { createStyles, makeStyles } from "@material-ui/core/styles"
 import { Sampler } from "tone"
 import violinA4 from "../../assets/samples/violin/A4.wav"
-import basoonA1 from "../../assets/samples/basoon/A1.wav"
-import basoonA2 from "../../assets/samples/basoon/A2.wav"
-import basoonA3 from "../../assets/samples/basoon/A3.wav"
+import bassoonA1 from "../../assets/samples/bassoon/A1.wav"
+import bassoonA2 from "../../assets/samples/bassoon/A2.wav"
+import bassoonA3 from "../../assets/samples/bassoon/A3.wav"
 import organA1 from "../../assets/samples/organ/A1.wav"
 import organA2 from "../../assets/samples/organ/A2.wav"
 import organA3 from "../../assets/samples/organ/A3.wav"
@@ -34,6 +34,11 @@ import doubleBassA3 from "../../assets/samples/doubleBass/A3.wav"
 import guitarA1 from "../../assets/samples/guitar/A1.wav"
 import guitarA2 from "../../assets/samples/guitar/A2.wav"
 import guitarA3 from "../../assets/samples/guitar/A3.wav"
+import xylophoneG3 from "../../assets/samples/xylophone/G3.wav"
+import xylophoneG4 from "../../assets/samples/xylophone/G4.wav"
+import xylophoneG5 from "../../assets/samples/xylophone/G5.wav"
+import xylophoneG6 from "../../assets/samples/xylophone/G6.wav"
+import xylophoneC7 from "../../assets/samples/xylophone/C7.wav"
 import { MainContext } from "./../MainContext"
 import { getCharacterComponents, testKorean } from "../utils"
 import { charactersDisplayerLoader } from "../utils/display"
@@ -106,134 +111,168 @@ export const P5 = (props) => {
     instrumentsMode
   } = useContext(MainContext)
 
-  const [instrumentSets, setInstrumentSets] = useState({ 0: null, 1: null })
+  const [instrumentSets, setInstrumentSets] = useState({
+    0: null,
+    1: null,
+    2: null
+  })
 
   useEffect(() => {
     if (instrumentSets[instrumentsMode] === null) {
       setLoadingInstruments(loadingInstruments + 3)
-      const newInstrumentSet =
-        instrumentsMode === 0
-          ? [
-              new Sampler({
-                urls: {
-                  A3: fluteA3,
-                  A4: fluteA4,
-                  A5: fluteA5
-                },
-                attack: 100,
-                release: 100,
-                volume: -10,
-                onload: () => {
-                  setLoadingInstruments((r) => r - 1)
-                  console.log("Flute Loaded!")
-                }
-              }).toDestination(),
-              new Sampler({
-                urls: {
-                  A2: celloA2,
-                  A3: celloA3,
-                  A4: celloA4
-                },
-                attack: 100,
-                release: 100,
-                // volume: -10,
-                onload: () => {
-                  setLoadingInstruments((r) => r - 1)
-                  console.log("Cello Loaded!")
-                }
-              }).toDestination(),
-              new Sampler({
-                urls: {
-                  A1: basoonA1,
-                  A2: basoonA2,
-                  A3: basoonA3
-                },
-                attack: 100,
-                release: 100,
-                // volume: -10,
-                onload: () => {
-                  setLoadingInstruments((r) => r - 1)
-                  console.log("Basoon Loaded!")
-                }
-              }).toDestination()
-              // new Sampler({
-              //   urls: {
-              //     A1: organA1,
-              //     A2: organA2,
-              //     A3: organA3,
-              //     A4: organA4,
-              //     A5: organA5
-              //   },
-              //   attack: 100,
-              //   release: 100,
-              //   // volume: -10,
-              //   onload: () => {
-              //     setLoadingInstruments((r) => r - 1)
-              //     console.log("Organ Loaded!")
-              //   }
-              // }).toDestination()
-            ]
-          : [
-              new Sampler({
-                urls: {
-                  A2: harpA2,
-                  B3: harpB3,
-                  A4: harpA4,
-                  B5: harpB5,
-                  A6: harpA6
-                },
-                attack: 100,
-                release: 100,
-                // volume: -10,
-                onload: () => {
-                  setLoadingInstruments((r) => r - 1)
-                  console.log("Harp Loaded!")
-                }
-              }).toDestination(),
-              // new Sampler({
-              //   urls: {
-              //     C4: "C4.mp3",
-              //     "D#4": "Ds4.mp3",
-              //     "F#4": "Fs4.mp3",
-              //     A4: "A4.mp3"
-              //   },
-              //   attack: 0,
-              //   release: 100,
-              //   onload: () => {
-              //     setLoadingInstruments((r) => r - 1)
-              //     console.log("Piano Loaded!")
-              //   },
-              //   baseUrl: "https://tonejs.github.io/audio/salamander/"
-              // }).toDestination(),
-              new Sampler({
-                urls: {
-                  A1: guitarA1,
-                  A2: guitarA2,
-                  A3: guitarA3
-                },
-                attack: 100,
-                release: 100,
-                // volume: -10,
-                onload: () => {
-                  setLoadingInstruments((r) => r - 1)
-                  console.log("Guitar Loaded!")
-                }
-              }).toDestination(),
-              new Sampler({
-                urls: {
-                  A1: doubleBassA1,
-                  A2: doubleBassA2,
-                  A3: doubleBassA3
-                },
-                attack: 100,
-                release: 100,
-                // volume: -10,
-                onload: () => {
-                  setLoadingInstruments((r) => r - 1)
-                  console.log("Double Bass Loaded!")
-                }
-              }).toDestination()
-            ]
+      let newInstrumentSet
+
+      switch (instrumentsMode) {
+        case 0:
+          newInstrumentSet = [
+            new Sampler({
+              urls: {
+                A2: harpA2,
+                B3: harpB3,
+                A4: harpA4,
+                B5: harpB5,
+                A6: harpA6
+              },
+              attack: 100,
+              release: 100,
+              // volume: -10,
+              onload: () => {
+                setLoadingInstruments((r) => r - 1)
+                console.log("Harp Loaded!")
+              }
+            }).toDestination(),
+            // new Sampler({
+            //   urls: {
+            //     C4: "C4.mp3",
+            //     "D#4": "Ds4.mp3",
+            //     "F#4": "Fs4.mp3",
+            //     A4: "A4.mp3"
+            //   },
+            //   attack: 0,
+            //   release: 100,
+            //   onload: () => {
+            //     setLoadingInstruments((r) => r - 1)
+            //     console.log("Piano Loaded!")
+            //   },
+            //   baseUrl: "https://tonejs.github.io/audio/salamander/"
+            // }).toDestination(),
+            new Sampler({
+              urls: {
+                A1: guitarA1,
+                A2: guitarA2,
+                A3: guitarA3
+              },
+              attack: 100,
+              release: 100,
+              // volume: -10,
+              onload: () => {
+                setLoadingInstruments((r) => r - 1)
+                console.log("Guitar Loaded!")
+              }
+            }).toDestination(),
+            new Sampler({
+              urls: {
+                A1: doubleBassA1,
+                A2: doubleBassA2,
+                A3: doubleBassA3
+              },
+              attack: 100,
+              release: 100,
+              // volume: -10,
+              onload: () => {
+                setLoadingInstruments((r) => r - 1)
+                console.log("Double Bass Loaded!")
+              }
+            }).toDestination()
+          ]
+          break
+
+        case 1:
+          newInstrumentSet = [
+            new Sampler({
+              urls: {
+                A3: fluteA3,
+                A4: fluteA4,
+                A5: fluteA5
+              },
+              attack: 100,
+              release: 100,
+              volume: -10,
+              onload: () => {
+                setLoadingInstruments((r) => r - 1)
+                console.log("Flute Loaded!")
+              }
+            }).toDestination(),
+            new Sampler({
+              urls: {
+                A2: celloA2,
+                A3: celloA3,
+                A4: celloA4
+              },
+              attack: 100,
+              release: 100,
+              // volume: -10,
+              onload: () => {
+                setLoadingInstruments((r) => r - 1)
+                console.log("Cello Loaded!")
+              }
+            }).toDestination(),
+            new Sampler({
+              urls: {
+                A1: bassoonA1,
+                A2: bassoonA2,
+                A3: bassoonA3
+              },
+              attack: 100,
+              release: 100,
+              // volume: -10,
+              onload: () => {
+                setLoadingInstruments((r) => r - 1)
+                console.log("Bassoon Loaded!")
+              }
+            }).toDestination()
+            // new Sampler({
+            //   urls: {
+            //     A1: organA1,
+            //     A2: organA2,
+            //     A3: organA3,
+            //     A4: organA4,
+            //     A5: organA5
+            //   },
+            //   attack: 100,
+            //   release: 100,
+            //   // volume: -10,
+            //   onload: () => {
+            //     setLoadingInstruments((r) => r - 1)
+            //     console.log("Organ Loaded!")
+            //   }
+            // }).toDestination()
+          ]
+          break
+
+        case 2:
+          const xylophone = new Sampler({
+            urls: {
+              C7: xylophoneC7,
+              G3: xylophoneG3,
+              G4: xylophoneG4,
+              G5: xylophoneG5,
+              G6: xylophoneG6
+            },
+            attack: 100,
+            release: 100,
+            // volume: -10,
+            onload: () => {
+              setLoadingInstruments((r) => r - 3)
+              console.log("Xylophone Loaded!")
+            }
+          }).toDestination()
+          newInstrumentSet = [xylophone, xylophone, xylophone]
+          break
+
+        default:
+          newInstrumentSet = null
+      }
       setInstrumentSets({
         ...instrumentSets,
         [instrumentsMode]: newInstrumentSet
